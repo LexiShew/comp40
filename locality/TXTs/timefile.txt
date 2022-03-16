@@ -1,0 +1,32 @@
+
+Rotation 0 was performed in 3072372 nanoseconds
+Total number of pixels: 18180
+Time per Pixel: 169 nanoseconds
+
+Rotation 90 was performed in 1556821 nanoseconds
+Total number of pixels: 18180
+Time per Pixel: 86 nanoseconds
+
+Rotation 180 was performed in 1616738 nanoseconds
+Total number of pixels: 18180
+Time per Pixel: 89 nanoseconds
+
+Rotation 270 was performed in 1556717 nanoseconds
+Total number of pixels: 18180
+Time per Pixel: 86 nanoseconds
+
+Horizontal flip was performed in 1775878 nanoseconds
+Total number of pixels: 18180
+Time per Pixel: 98 nanoseconds
+
+Vertical flip was performed in 1591903 nanoseconds
+Total number of pixels: 18180
+Time per Pixel: 88 nanoseconds
+
+Transpose was performed in 1547593 nanoseconds
+Total number of pixels: 18180
+Time per Pixel: 85 nanoseconds
+
+Rotation 90 was performed in 1010587 nanoseconds
+Total number of pixels: 18180
+Time per Pixel: 56 nanoseconds

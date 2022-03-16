@@ -1,0 +1,4 @@
+
+Rotation 270 was performed in 9560 nanoseconds
+Total number of pixels: 20
+Time per Pixel: 478 nanoseconds

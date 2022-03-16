@@ -1,0 +1,236 @@
+TO DO:
+- remove any unneeded includes
+    - mem_instructinos.c
+    - memory.c
+
+
+*** README ***
+
+COMP 40 Homework 6 -- um
+
+Date: 22 November 2021
+
+Names:
+    - Lexi Shewchuk (ashewc01)
+    - Aaron Hamburg (ahambu01)
+
+Help:
+    - Got help from Alex, Alan, Patrick.
+    - We also appreciated the questions and reposnses on Piazza.
+
+Implementation:
+    - All components are correctly implemented.
+
+Departures from Design:
+    - Changed "instructions" module to "memory instructions",
+        "math instructions", and "I/O instructions"
+    - Got rid of next_ID variable -- just used length of Sequence
+    - Added Sequence module
+    - Added Registers modules
+
+System Architecture:
+    - um.c is the driver file, which handles input files and then passes an
+        uninitialized array of the correct size to get_m0, from the init.c
+        file. This m0 array is passed to um_run, from um_run.c, which handles
+        freeing the array.
+    - init.c/h has just the one function, get_m0, which fills in the m0
+        array with the instructions from the input file. It knows the filename
+        of the instruction file, and has a pointer to the start of the m0
+        array.
+    - um_run.c/h is a sort of sub-driver file for running the instructions. It
+        initializes the data structures required for memory and calls functions
+        for each instruction. It creates a Memory_T, from memory.c, and a
+        Registers_T, from registers.c, which are both incomplete structs,
+        meaning that they can only interact with them through functions defined
+        in their respective header files. It also has program counter and the
+        recycle list (a List_T), and has access to the functions from
+        math_instructions.c, mem_instructions.c and io_instructions.c.
+    - memory.c/h defines the Memory_T struct which allows the client to create
+        memory segments and do operations on them. It does not reveal the
+        implementation of the memory to clients since the header file only
+        has the incomplete struct.
+    - registers.c/h defines the Registers_T struct which allows the client to
+        create a set of 8 registers and perform operations on them. It, like
+        memory.c/h, doesn't reveal the implementation of fthe registers to
+        clients since the header file only has the incomplete struct.
+    - math_instructions.c/h defines the instructions add, multiply, divide,
+        nand, conditional move, and load val. It performs these operations
+        using a Registers_T, which it acts upon using the Registers functions
+        on the incomplete struct.
+    - mem_instructions.c/h defines the instructions segmented load, segmented
+        store, map, unmap, and load program. It performs these operations
+        using a Memory_T, a Registers_T, and sometimes the recycle
+        list (List_T), all of which are incomplete structs and are acted upon
+        using their respective functions.
+    - io_instructions.c/h defines the instructions input and ouptut. It
+        performs these operations using a Registers_T, which it acts upon using
+        the Registers functions on the incomplete struct.
+
+UM Runtime:
+- sandmark.um: 204.51 sec for 2,113,497,561 instructions.
+    - We added an instruction counter into our um_run.c and printed it at the
+        end of the loop to see how many instructions were called, and then
+        timed sandmark with this addition to get these numbers. This would mean
+        that 50 million instructions would take 4.84 seconds.
+
+
+Unit Tests:
+- halt.um:
+    Tests the halt instruction by calling only halt.
+
+- halt-verbose.um:
+    Tests the halt instruction by calling it followed by other instructions to
+    check if it prevents them from being called.
+
+- load-extreme.um:
+    Tests the loadval and output instructions by loading a variety of values
+    including 0 and 255, as well as some more readable values, and outputting
+    them.
+
+- print-six.um:
+    Tests the loadval, add, and output instructions by loading a 0 character,
+    adding 6 to it and outputting it.
+
+- add.um:
+    Tests the loadval and add instructions by loading a 0 character, adding 3
+    to it and outputting it.
+
+- add-zeros.um:
+    Tests the loadval and add instructions by loading 0 and adding it to
+    itself, then outputting it, to test whether it having 0 in both positions
+    causes any issues.
+
+- add-three-zero.um:
+    Tests the loadval and add instructions by loading 3 and 0 and adding them,
+    then outputting the result, to test whether adding a nonzero with a zero
+    works.
+
+- add-zero-three.um:
+    Tests the loadval and add instructions by loading 0 and 3 and adding them,
+    then outputting the result, to test whether adding a zero with a nonzero
+    works.
+
+- add-15-20.um:
+    Tests the loadval and add instructions by loading 15 and 20 and adding
+    them, then outputting the result, to test whether adding two nonzero
+    values works.
+
+- mult.um:
+    Tests the multiply instruction by loading 13 and 5, multiplying them and
+    outputting the result to see if the multiplication gives what we expect.
+    65 (13 * 5) is a readable ASCII character which is why we chose these
+    numbers.
+
+- mult-zero.um:
+    Tests the multiply intstruction by loading 2 0's, multiplying them, and
+    ouputting the result to see if multiplying two zeros works.
+
+- mult-one-zero.um:
+    Tests the multiply instruction by loading 1 and 0, multiplying them, and
+    outputting the result to see if multiplying a nonzero with a zero works.
+
+- mult-max.um:
+    Tests the multiply instruction by loading 2^16, multiplying it by itself,
+    then outputting the result to see if it yields 0. This tests whether
+    multiplication correctly overflows back to 0.
+
+- divide.um:
+    Tests the divide instruction by loading 132 and 2, then dividing them and
+    outputting the result. 66 is a readable ASCII character which is why we
+    chose these numbers.
+
+- div-0-1.um:
+    Tests the divide instruction by loading 0 and 1, then dividing them and
+    outputting the result to see if dividing a zero by a nonzero works.
+
+- div-7-3.um and div-3-7.um:
+    Tests the divide instruction by loading 7 and 3, then dividing them and
+    outputting the result. The first does 7/3, the other does 3/7, to test
+    whether the integer division rounds properly.
+
+- mult-div-complex.um:
+    Tests the multiply and divide instructions by loading 3 and 4, then stores
+    (3 * 4) and (4 * 3), then divides those to see if the communative property
+    holds for our multiplication.
+
+- nand.um:
+    Tests the nand instruction by loading 0, nanding it, then adding 55 and
+    outputting the result to see if we get the 54 ASCII character. This is
+    a readable character which is why we chose 55.
+
+- nand-big.um:
+    Tests the nand instruction by loading 2^32 - 1 (by loading 0xFFFF, then
+    multiplying by 2^16, then adding 0xFFFF, then adding them together),
+    nanding it and outputting the result to see if it yields 0. This checks
+    that nand works with numbers close to 2^32.
+
+- add-big.um:
+    Tests the loadval, add, multiply and nand instructions by loading 1 and
+    loading 2^32 - 1 (by loading 0xFFFF, then multiplying by 2^16, then adding
+    0xFFFF, then adding them together). Nands the 2^32 - 1 and outputs it to
+    check if it gives 0 (to ensure that the 2^32 - 1 is correct), and then
+    adds 1 and 2^32 - 1 to see if that also gives 0 . This tests if addition
+    correctly overflows back to 0.
+
+- input.um:
+    Tests the input instruction by repeatedly taking input and then outputting
+    it. Takes inputs 0, 1, 2, A, B, Z, a, b, z, ÿ (ascii 255) to test a variety
+    of readable inputs.
+
+- input-weird.um:
+    Tests the input instruction by taking two inputs then outputting them.
+    The input file for this was created by doing putchar(0) and putchar(255),
+    to test for extreme values.
+
+- cond-move-2.um:
+    Tests the conditional move instruction by loading 1 into the condition,
+    outputting r2 after the cond_move. Checks if it moves the values with a
+    nonzero condition.
+
+- cond-move-0.um:
+    Tests the conditional move instruction by loading 0 into the condition,
+    outputting r2 after the cond_move. Checks that it doesn't move the values
+    with a zero condition.
+
+- cond-move-16.um:
+    Tests the conditional move instruction by loading 1024 into the condition,
+    outputting r2 after the cond_move. Checks if it moves the values with a
+    large nonzero condition.
+
+- map.um
+    Tests the map instruction by loading 5 as the size of the segments,
+    then mapping 6 segments into registers 1-6, then outputs r6. Checks if the
+    segment IDs increase for each map.
+
+- unmap.um
+    Tests the map and unmap instructions by mapping a segment and unmapping it,
+    then outputting r1 to make sure the segment mapped into ID 1. Tests that
+    unmap properly works.
+
+- map-unmap.um
+    Tests the map and unmap instructions by mapping 4 segments, unmapping 2 of
+    them, then remapping 3. Then outputs the IDS of all of the segments that
+    were mapped to see if they correctly map into unmapped IDs.
+
+- store-load.um
+    Tests the segmented store and segmented load instructions by mapping a
+    segment of length 5, storing 20 into the 3rd index, then loading the 3rd
+    index of segment 1 and outputting the result. Checks if store and load
+    properly access the segmented memory.
+
+- load-program.um
+    Tests the load program instruction by repeatedly calling load programs
+    and outputs such that it should skip every other output call. Tests
+    calling load program on m[0].
+
+- load-halt-program.um
+    Tests the load program instruction by mapping a segment of length 1,
+    writing a halt instruction into it, and loading it, followed by an output.
+    The output shouldn't run if the load works properly, tests loading a memory
+    segment other than m[0].
+
+
+Time:
+    Analyzing assignment: 1 hour
+    Preparing design:     5 hours
+    Solving problems:     14 hours

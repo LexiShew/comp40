@@ -1,0 +1,6 @@
+macro mov
+
+loadval rt,1
+cmov p1,p2,rt
+
+mend

@@ -1,0 +1,73 @@
+
+**************************************************************
+*            Stride Performance Test Results                 *
+**************************************************************
+
+Testing on 128 array elements each of size 4 bytes with stride 1.
+Total array size is 512 bytes.
+
+Elements in the array are accessed with write/read pairs.
+This is done first on element[0], then element [1] and so on.
+The entire process is repeated 4 times.
+
+No sum of array elements was maintained. All simulated cache 
+traffic was from array accesses.
+
+Total element accesses: 1024  (512 read and 512 write)
+Total bytes accessed: 4096
+
+
+==============================================================
+          Aggregate Cache and Performance Statistics
+==============================================================
+
+Simulated Cache Characteristics:
+--------------------------------
+
+Lines=16  Associativity=1 (direct mapped)  Block_size=16
+Total cache size is: 256 bytes
+
+The simulated cache is a "write-back" type: dirty blocks are not written
+to memory until evicted, at which time a "write_for_eviction"
+is recorded. When a line is written partially, then a
+"read_for_write" accounts the need to read the line from
+memory before updating it.
+
+Performance Results:
+--------------------
+
+Accesses=1024  Hits=896 (87.5%)
+Read Misses=0 (0.0%) Write Misses=128 (25.0%)  Evictions=112
+Reads=512  Writes=512  Reads_for_writes=128  Writes_for_evictions=112
+Dirty blocks remaining=16
+
+Time for hits=896ns  Time for memory reads=12.80us
+Time for memory writes (including flushing dirties)=16.64us
+Estimated total memory access time:   With caching=30.34us   No caching=117.76us
+Speedup: 3.9x
+
+
+==============================================================
+          Contents of individual cache line controls
+==============================================================
+
+Tag has 56 bits
+
+Line  Valid   Dirty Tag
+    0   VALID DIRTY 00000000000000000000000000000000000000000000000000000001
+    1   VALID DIRTY 00000000000000000000000000000000000000000000000000000001
+    2   VALID DIRTY 00000000000000000000000000000000000000000000000000000001
+    3   VALID DIRTY 00000000000000000000000000000000000000000000000000000001
+    4   VALID DIRTY 00000000000000000000000000000000000000000000000000000001
+    5   VALID DIRTY 00000000000000000000000000000000000000000000000000000001
+    6   VALID DIRTY 00000000000000000000000000000000000000000000000000000001
+    7   VALID DIRTY 00000000000000000000000000000000000000000000000000000001
+    8   VALID DIRTY 00000000000000000000000000000000000000000000000000000001
+    9   VALID DIRTY 00000000000000000000000000000000000000000000000000000001
+   10   VALID DIRTY 00000000000000000000000000000000000000000000000000000001
+   11   VALID DIRTY 00000000000000000000000000000000000000000000000000000001
+   12   VALID DIRTY 00000000000000000000000000000000000000000000000000000001
+   13   VALID DIRTY 00000000000000000000000000000000000000000000000000000001
+   14   VALID DIRTY 00000000000000000000000000000000000000000000000000000001
+   15   VALID DIRTY 00000000000000000000000000000000000000000000000000000001
+

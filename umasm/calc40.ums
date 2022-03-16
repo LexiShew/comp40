@@ -1,0 +1,332 @@
+.section init
+    .temps off
+    .temps r6, r7, r3
+    .zero r0
+    r0 := 0
+
+    r4 := 0
+
+    i_loop_start:
+    if (r4 >=s 256) goto i_loop_done
+
+    r5 := jump_char + r4
+    m[r0][r5]  := input_error
+    r5 := jump_entering + r4
+    m[r0][r5]  := input_error
+
+    r4 := r4 + 1
+    goto i_loop_start
+
+    i_loop_done:
+    .temps off
+    .temps r6, r7
+
+    m[r0][jump_char - 1]    := eof
+    m[r0][jump_char + '0']  := digit
+    m[r0][jump_char + '1']  := digit
+    m[r0][jump_char + '2']  := digit
+    m[r0][jump_char + '3']  := digit
+    m[r0][jump_char + '4']  := digit
+    m[r0][jump_char + '5']  := digit
+    m[r0][jump_char + '6']  := digit
+    m[r0][jump_char + '7']  := digit
+    m[r0][jump_char + '8']  := digit
+    m[r0][jump_char + '9']  := digit
+    m[r0][jump_char + ' ']  := waiting
+    m[r0][jump_char + '\n'] := print_stack
+    m[r0][jump_char + '+']  := add
+    m[r0][jump_char + '-']  := sub
+    m[r0][jump_char + '*']  := mult
+    m[r0][jump_char + '/']  := div
+    m[r0][jump_char + '|']  := or
+    m[r0][jump_char + '&']  := and
+    m[r0][jump_char + 'c']  := csign
+    m[r0][jump_char + '~']  := comp
+    m[r0][jump_char + 's']  := swap
+    m[r0][jump_char + 'd']  := dup
+    m[r0][jump_char + 'p']  := pop_val
+    m[r0][jump_char + 'z']  := clear_stack
+    m[r0][jump_char + 'b']  := waiting
+
+    m[r0][jump_entering - 1]    := eof
+    m[r0][jump_entering + '0']  := digit_entering
+    m[r0][jump_entering + '1']  := digit_entering
+    m[r0][jump_entering + '2']  := digit_entering
+    m[r0][jump_entering + '3']  := digit_entering
+    m[r0][jump_entering + '4']  := digit_entering
+    m[r0][jump_entering + '5']  := digit_entering
+    m[r0][jump_entering + '6']  := digit_entering
+    m[r0][jump_entering + '7']  := digit_entering
+    m[r0][jump_entering + '8']  := digit_entering
+    m[r0][jump_entering + '9']  := digit_entering
+    m[r0][jump_entering + ' ']  := waiting
+    m[r0][jump_entering + '\n'] := print_stack
+    m[r0][jump_entering + '+']  := add
+    m[r0][jump_entering + '-']  := sub
+    m[r0][jump_entering + '*']  := mult
+    m[r0][jump_entering + '/']  := div
+    m[r0][jump_entering + '|']  := or
+    m[r0][jump_entering + '&']  := and
+    m[r0][jump_entering + 'c']  := csign
+    m[r0][jump_entering + '~']  := comp
+    m[r0][jump_entering + 's']  := swap
+    m[r0][jump_entering + 'd']  := dup
+    m[r0][jump_entering + 'p']  := pop_val
+    m[r0][jump_entering + 'z']  := clear_stack
+
+
+.section text
+    main:
+        push r1 on stack r2
+        r5 := valuestack
+
+    waiting:
+        r3 := input()
+
+    waiting_with_char:
+        r4 := r3 + jump_char
+        goto m[r0][r4]
+        
+    entering:
+        r3 := input()
+        r4 := r3 + jump_entering
+        goto m[r0][r4]
+
+    end_main:
+        pop r1 off stack r2
+        goto r1
+
+    digit:
+        r3 := r3 - '0'
+        push r3 on stack r5
+        goto entering
+
+    digit_entering:
+        pop r4 off stack r5
+        r4 := r4 * 10
+        r3 := r3 - '0'
+        r3 := r3 + r4
+        push r3 on stack r5
+        goto entering
+
+    print_stack:
+        push r5 on stack r2         # save pos on valstack in callstack
+
+        p_s_loop_start:
+        .temps off
+        .temps r3, r6, r7
+        if (r5 >=s valuestack) goto p_s_loop_end
+
+        pop r4 off stack r5
+        push r4 on stack r2
+        output ">>> "
+        goto print linking r1
+        output '\n'
+        goto p_s_loop_start
+
+        p_s_loop_end:
+
+        .temps off
+        .temps r6, r7
+        pop r5 off stack r2
+        goto waiting
+
+    add:
+        goto check_binary linking r1
+        pop r3 off stack r5
+        pop r4 off stack r5
+        r3 := r3 + r4
+        push r3 on stack r5
+        goto waiting
+
+    sub:
+        goto check_binary linking r1
+        pop r3 off stack r5
+        pop r4 off stack r5
+        r3 := r4 - r3
+        push r3 on stack r5
+        goto waiting
+
+    mult:
+        goto check_binary linking r1
+        pop r3 off stack r5
+        pop r4 off stack r5
+        r3 := r3 * r4
+        push r3 on stack r5
+        goto waiting
+
+    div:
+        goto check_binary linking r1
+        pop r3 off stack r5
+        pop r4 off stack r5
+        push r5 on stack r2
+        push r1 on stack r2
+        
+
+        if (r3 == 0) goto div_zero
+
+        .temps off
+        .temps r5, r6, r7
+
+        r1 := 1
+
+        if (r4 >=s 0) goto div_c1
+        r4 := r4 * -1
+        r1 := r1 * -1
+        div_c1:
+
+        if (r3 >=s 0) goto div_c2
+        r3 := r3 * -1
+        r1 := r1 * -1
+        div_c2:
+
+        .temps off
+        .temps r6, r7
+
+        r3 := r4 / r3
+        r3 := r3 * r1
+
+        pop r1 off stack r2
+        pop r5 off stack r2
+
+        push r3 on stack r5
+
+        goto waiting
+
+    div_zero:
+        output "Division by zero"
+        output '\n'
+        pop r1 off stack r2
+        pop r5 off stack r2
+        push r4 on stack r5
+        push r3 on stack r5
+        goto waiting
+
+
+
+
+    or:
+        goto check_binary linking r1
+        pop r3 off stack r5
+        pop r4 off stack r5
+        r3 := r3 | r4
+        push r3 on stack r5
+        goto waiting
+
+    and:
+        goto check_binary linking r1
+        pop r3 off stack r5
+        pop r4 off stack r5
+        r3 := r3 & r4
+        push r3 on stack r5
+        goto waiting
+
+    csign:
+        goto check_unary linking r1
+        pop r3 off stack r5
+        r3 := r3 * -1
+        push r3 on stack r5
+        goto waiting
+
+    comp:
+        goto check_unary linking r1
+        pop r3 off stack r5
+        r3 := r3 * -1
+        r3 := r3 - 1
+        push r3 on stack r5
+        goto waiting
+
+    swap:
+        goto check_binary linking r1
+        pop r3 off stack r5
+        pop r4 off stack r5
+        push r3 on stack r5
+        push r4 on stack r5
+        goto waiting
+
+    dup:
+        goto check_unary linking r1
+        pop r3 off stack r5
+        push r3 on stack r5
+        push r3 on stack r5
+        goto waiting
+
+    pop_val:
+        goto check_unary linking r1
+        pop stack r5
+        goto waiting
+
+    clear_stack:
+        r5 := valuestack
+        goto waiting
+
+    input_error:
+        output "Unknown character '"
+        output r3
+        output "'"
+        output '\n'
+        goto waiting
+
+    eof:
+        halt
+
+    check_binary:
+        push r3 on stack r2
+        push r4 on stack r2
+        .temps off
+        .temps r4, r6, r7
+        
+        r3 := valuestack - r5
+        if (r3 >=s 2) goto end_check_binary
+
+        .temps off
+        .temps r6, r7
+        pop r4 off stack r2
+        pop r3 off stack r2
+        output "Stack underflow---expected at least 2 elements"
+        output '\n'
+        goto waiting
+
+        end_check_binary:
+        .temps off
+        .temps r6, r7
+        pop r4 off stack r2
+        pop r3 off stack r2
+        goto r1
+
+    check_unary:
+        push r3 on stack r2
+        push r4 on stack r2
+        .temps off
+        .temps r4, r6, r7
+        
+        r3 := valuestack - r5
+        if (r3 >=s 1) goto end_check_binary
+
+        .temps off
+        .temps r6, r7
+        pop r4 off stack r2
+        pop r3 off stack r2
+        output "Stack underflow---expected at least 1 element"
+        output '\n'
+        goto waiting
+
+        end_check_unary:
+        .temps off
+        .temps r6, r7
+        pop r4 off stack r2
+        pop r3 off stack r2
+        goto r1
+
+
+.section data
+    .space 10000
+    valuestack:
+
+.section rodata
+    .space 1
+    jump_char:
+        .space 256
+    .space 1
+    jump_entering:
+        .space 256

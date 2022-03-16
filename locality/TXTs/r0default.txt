@@ -1,0 +1,4 @@
+
+Rotation 0 was performed in 6152 nanoseconds
+Total number of pixels: 20
+Time per Pixel: 308 nanoseconds

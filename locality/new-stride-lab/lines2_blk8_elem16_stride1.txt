@@ -1,0 +1,59 @@
+
+**************************************************************
+*            Stride Performance Test Results                 *
+**************************************************************
+
+Testing on 16 array elements each of size 4 bytes with stride 1.
+Total array size is 64 bytes.
+
+Elements in the array are accessed with write/read pairs.
+This is done first on element[0], then element [1] and so on.
+The entire process is repeated 4 times.
+
+No sum of array elements was maintained. All simulated cache 
+traffic was from array accesses.
+
+Total element accesses: 128  (64 read and 64 write)
+Total bytes accessed: 512
+
+
+==============================================================
+          Aggregate Cache and Performance Statistics
+==============================================================
+
+Simulated Cache Characteristics:
+--------------------------------
+
+Lines=2  Associativity=1 (direct mapped)  Block_size=8
+Total cache size is: 16 bytes
+
+The simulated cache is a "write-back" type: dirty blocks are not written
+to memory until evicted, at which time a "write_for_eviction"
+is recorded. When a line is written partially, then a
+"read_for_write" accounts the need to read the line from
+memory before updating it.
+
+Performance Results:
+--------------------
+
+Accesses=128  Hits=96 (75.0%)
+Read Misses=0 (0.0%) Write Misses=32 (50.0%)  Evictions=30
+Reads=64  Writes=64  Reads_for_writes=32  Writes_for_evictions=30
+Dirty blocks remaining=2
+
+Time for hits=96ns  Time for memory reads=3.20us
+Time for memory writes (including flushing dirties)=4.16us
+Estimated total memory access time:   With caching=7.46us   No caching=14.72us
+Speedup: 2.0x
+
+
+==============================================================
+          Contents of individual cache line controls
+==============================================================
+
+Tag has 60 bits
+
+Line  Valid   Dirty Tag
+    0   VALID DIRTY 000000000000000000000000000000000000000000000000000000000011
+    1   VALID DIRTY 000000000000000000000000000000000000000000000000000000000011
+

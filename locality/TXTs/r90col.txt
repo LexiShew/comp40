@@ -1,0 +1,4 @@
+
+Rotation 90 was performed in 9319 nanoseconds
+Total number of pixels: 20
+Time per Pixel: 466 nanoseconds

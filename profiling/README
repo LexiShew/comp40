@@ -1,0 +1,43 @@
+*******************************************************************************
+*                                   README                                    *
+*                                                                             *
+*   COMP 40 Homework 7 -- profiling                                           *
+*                                                                             *
+*   Date: 7 December 2021                                                     *
+*                                                                             *
+*   Names:                                                                    *
+*      - Lexi Shewchuk (ashewc01)                                             *
+*      - Aaron Hamburg (ahambu01                                              *
+*                                                                             *
+*******************************************************************************
+
+Help:
+    - We got help from Liana, Alan, and Adam, and we checked Piazza to see
+        what other students were asking questions about.
+
+
+Most Expensive Routine:
+* (30%) Bit shifting while unpacking the different values:
+    We have to shift the word left and right in order to isolate the value
+    that we're trying to access. This several times for every instruction
+    (e.g. for opcode, registers, val for loadval). There's not really a good
+    way to avoid this routine since it's fairly inexpensive but needs to
+    happen a lot. We tried only calling the getu function where needed (like
+    we didn't call it at all in halt, but had to call it 3 times in arithmetic
+    instructions), but this ended up being slower than having all getu calls
+    at once before our switch statement. We discussed potentiall making
+    hard-coded masks that can be AND-ed with the word to remove one shift
+    operation, but this didn't seem like it would be any less expensive.
+    
+* Another thing that could be potentially improved (but didn't actually take
+    that much time) could be unpacking the value for loadval directly into r[A]
+    to potentially avoid putting another thing on the stack, though this would
+    be a minor optimization that wouldn't impact overall runtime significantly.
+
+
+Time:
+    Analyzing assignment: 2 hours
+    Solving problems:     10 hours
+
+
+*******************************************************************************

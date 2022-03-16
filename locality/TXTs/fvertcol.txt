@@ -1,0 +1,4 @@
+
+Vertical flip was performed in 9849 nanoseconds
+Total number of pixels: 20
+Time per Pixel: 492 nanoseconds

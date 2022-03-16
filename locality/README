@@ -1,0 +1,57 @@
+******  README  ******
+
+Names: 
+    - Lexi Shewchuk (ashewc01)
+    - Deanna Oei (doei01)
+
+Implementation:
+    We have succesffuly implemented all aspects of this project. 
+    Notably, we included the extra-credit transformations rotate 270, 
+    flip horizontal, flip vertical, and transpose.
+
+    Architechture: 
+        Out UArray2b is implemented as a UArray2 (using the Comp40 
+        solution code) of UArrays, where the UArrays respresent a block.
+
+- Part E: Performance Measures
+    We used the Halligan computer Lab120Q for all these measurements.
+    Image: flowers.ppm
+    -------------------------------------------------------------------------
+    |  Image  |  Pixels    |  Transformation | Map |   Total    | Time per  |
+    |         |  in image  |                 |     |   Time     | pixel     |
+    -------------------------------------------------------------------------
+    | flowers |   18180    |   rotate 0      | Row | 732778 ns  |  40 ns    |
+    | flowers |   18180    |   rotate 90     | Row | 755638 ns  |  42 ns    |
+    | flowers |   18180    |   rotate 180    | Row | 881520 ns  |  48 ns    |
+    | flowers |   18180    |   rotate 270    | Row | 751499 ns  |  41 ns    |
+    | flowers |   18180    |   flip horiz    | Row | 738879 ns  |  41 ns    |
+    | flowers |   18180    |   flip vert     | Row | 787332 ns  |  43 ns    |
+    | flowers |   18180    |   transpose     | Row | 738460 ns  |  41 ns    |
+    | flowers |   18180    |   rotate 0      | Col | 2085529 ns |  115 ns   |
+    | flowers |   18180    |   rotate 90     | Col | 2247122 ns |  124 ns   |
+    | flowers |   18180    |   rotate 180    | Col | 2551218 ns |  140 ns   |
+    | flowers |   18180    |   rotate 270    | Col | 2245574 ns |  124 ns   |
+    | flowers |   18180    |   flip horiz    | Col | 2297738 ns |  126 ns   |
+    | flowers |   18180    |   flip vert     | Col | 2296010 ns |  126 ns   |
+    | flowers |   18180    |   transpose     | Col | 2104822 ns |  116 ns   |
+    | flowers |   18180    |   rotate 0      | Blk | 3072372 ns |  169 ns   |
+    | flowers |   18180    |   rotate 90     | Blk | 1156821 ns |  86 ns    |
+    | flowers |   18180    |   rotate 180    | Blk | 1616738 ns |  89 ns    |
+    | flowers |   18180    |   rotate 270    | Blk | 1156717 ns |  86 ns    |
+    | flowers |   18180    |   flip horiz    | Blk | 1775878 ns |  98 ns    |
+    | flowers |   18180    |   flip vert     | Blk | 1591903 ns |  88 ns    |
+    | flowers |   18180    |   transpose     | Blk | 1547593 ns |  85 ns    |
+    -------------------------------------------------------------------------
+
+    Patterns: We can see that row-major operations are the most efficient, 
+        then block major, then column-major. This is likely because the way 
+        that the UArray2 is implemented favors row-major since the rows
+        store consecutive data. Then, since block-major uses row-major
+        mapping, this would be second.
+
+Help:
+    The Comp40 TAs were beyond helpful. We asked lots of questions to
+    Alex, Tina, Zach, Ann Marie, Liana, Igor, Devon, and Adam.
+
+Time:
+    25 hours, approximately? We spread it out so it wasn't too overwhelming.

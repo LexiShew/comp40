@@ -1,0 +1,50 @@
+    // Seq_T currNumbers = Seq_new(1000);
+    // Seq_T currLetters = Seq_new(1000);
+    
+    // printf("\n in restoration \n\n");
+    // char currChar;
+    // int characterIndex = 0;
+    // // char *charptr;
+    // while ( currChar != '\n' ) {
+    //     currChar = datapp[characterIndex];
+    //     printf("currChar: %c\n",currChar);
+    //     characterIndex++;
+
+    //     /*  if the current character is a number character (e.g. '2'), add
+    //         it to the number sequence,
+    //         otherwise, the character isn't a number character (e.g. 'a') so
+    //         it should be added to the letter sequence
+    //     */
+    //     if (currChar >= '0' && currChar <= '9') {
+    //         char addedChar = *(char*) Seq_addhi(currNumbers, &currChar);
+    //         (void) addedChar;
+    //         // charptr = (char*) Seq_get(currNumbers, Seq_length(currNumbers) - 1);
+            
+    //         // printf("in for loop\n");  
+    //         // int currSize = Seq_length(currNumbers);
+    //         // for (int i = 0; i < currSize; i++) {
+    //         //     printf("%c ", *(char*) Seq_get(currNumbers, i));
+    //         // }
+    //         // printf("    adding char %c\n", addedChar);
+    //         // printf("    sequence length = %d\n", Seq_length(currNumbers));
+    //         // printf("    char at end: %c\n", *(char*) Seq_get(currNumbers, Seq_length(currNumbers) - 1));
+    //     }
+    //     else {
+    //         Seq_addhi(currLetters, &currChar);
+    //     }
+
+        
+    // }
+    
+    // // printf("char ptr = %s\n", charptr);
+    // // printf("sequence length = %d\n", Seq_length(currNumbers));
+    // // char charVal = *(char*) Seq_get(currNumbers, 0);
+    // // printf("char at front: %d\n", charVal);
+    // // printf("char at end: %c\n", *(char*) Seq_get(currNumbers, Seq_length(currNumbers) - 1));
+
+    // printf("in for loop\n");
+    // for (int i = 0; i < 300; i++) {
+
+        
+    //     printf("char at %d: %d\n", i, *(char*) Seq_get(currNumbers, Seq_length(currNumbers) - 1));
+    // }

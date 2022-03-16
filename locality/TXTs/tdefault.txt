@@ -1,0 +1,4 @@
+
+Transpose was performed in 9777 nanoseconds
+Total number of pixels: 20
+Time per Pixel: 489 nanoseconds

@@ -1,0 +1,59 @@
+
+**************************************************************
+*            Stride Performance Test Results                 *
+**************************************************************
+
+Testing on 8 array elements each of size 4 bytes with stride 1.
+Total array size is 32 bytes.
+
+Elements in the array are accessed with write/read pairs.
+This is done first on element[0], then element [1] and so on.
+The entire process is repeated 4 times.
+
+No sum of array elements was maintained. All simulated cache 
+traffic was from array accesses.
+
+Total element accesses: 64  (32 read and 32 write)
+Total bytes accessed: 256
+
+
+==============================================================
+          Aggregate Cache and Performance Statistics
+==============================================================
+
+Simulated Cache Characteristics:
+--------------------------------
+
+Lines=2  Associativity=1 (direct mapped)  Block_size=4
+Total cache size is: 8 bytes
+
+The simulated cache is a "write-back" type: dirty blocks are not written
+to memory until evicted, at which time a "write_for_eviction"
+is recorded. When a line is written partially, then a
+"read_for_write" accounts the need to read the line from
+memory before updating it.
+
+Performance Results:
+--------------------
+
+Accesses=64  Hits=32 (50.0%)
+Read Misses=0 (0.0%) Write Misses=32 (100.0%)  Evictions=30
+Reads=32  Writes=32  Reads_for_writes=0  Writes_for_evictions=30
+Dirty blocks remaining=2
+
+Time for hits=32ns  Time for memory reads=0ns
+Time for memory writes (including flushing dirties)=4.16us
+Estimated total memory access time:   With caching=4.19us   No caching=7.36us
+Speedup: 1.8x
+
+
+==============================================================
+          Contents of individual cache line controls
+==============================================================
+
+Tag has 61 bits
+
+Line  Valid   Dirty Tag
+    0   VALID DIRTY 0000000000000000000000000000000000000000000000000000000000011
+    1   VALID DIRTY 0000000000000000000000000000000000000000000000000000000000011
+

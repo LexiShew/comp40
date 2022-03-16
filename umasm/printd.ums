@@ -1,0 +1,75 @@
+##################################################
+# QUESTIONS FOR TAs
+#   * signed thing -- when we input the big negative number, it just loops
+#       around to -1 -- is that okay? Like how else do we deal w it?
+##################################################
+
+
+.section init
+    .zero r0
+    .temps r6, r7
+    r0 := 0
+
+.section text
+
+    ##################################################
+    # PRINT FUNCTION
+    ##################################################
+
+    print:
+        push r1 on stack r2     # push all the values that should be conserved
+        push r3 on stack r2     # (r1, r3, and r4)
+        push r4 on stack r2
+        r2 := r2 + 3
+        pop r3 off stack r2     # extract param into r3
+        r2 := r2 - 4
+
+        .temps off
+        .temps r6, r7, r4
+        if (r3 >=s 0) goto call_print_pos
+        output '-'
+        r3 := r3 * -1
+
+    call_print_pos:
+        .temps off
+        .temps r6, r7
+        push r3 on stack r2
+        goto print_pos linking r1
+
+        pop r4 off stack r2
+        pop r3 off stack r2
+        pop r1 off stack r2
+        pop stack r2
+
+        goto r1
+        
+    ##################################################
+    # PRINT POS FUNCTION
+    ##################################################
+
+    print_pos:
+        push r1 on stack r2     # push all the values that should be conserved
+        push r3 on stack r2     # (i.e. ret addy, r3, and r4) onto the stack
+        push r4 on stack r2
+        r2 := r2 + 3            # move the stack ptr down to where the word is 
+        pop r3 off stack r2     # store word into r3
+        r2 := r2 - 4
+
+        r4 := r3 / 10           # set r4 to be the n-1 most sig bits of r3 
+        if (r4 == 0) goto print_single
+        push r4 on stack r2
+        goto print_pos linking r1
+
+    print_mod:
+        r3 := r3 mod 10     # set r3 to be the last digit
+
+    print_single:
+        r3 := r3 + '0'      # print r3
+        output r3
+
+        pop r4 off stack r2     # reset stack to previous state, sans
+        pop r3 off stack r2     # word argument
+        pop r1 off stack r2
+        pop stack r2
+
+        goto r1

@@ -1,0 +1,18 @@
+.section init
+    .zero r0
+    .temps r6, r7
+    
+.section callstk
+    .space 10000
+    endcallstk:
+
+.section vstack
+    .space 10000
+    endvstk:
+
+.section init
+    start:
+        r0 := 0
+        r2 := endcallstk
+        goto main linking r1
+        halt

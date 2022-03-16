@@ -1,0 +1,72 @@
+*** README ***
+
+COMP 40 Homework 4 -- arith
+
+Date: 27 October 2021
+
+Names:
+    - Lexi Shewchuk (ashewc01)
+    - Deanna Oei (doei01)
+
+Architecture (which files do what):
+    bitpack.c
+        Contains implementation for bitpacking and retriving bit values in
+        words. Functions include checking if values can fit in a given number
+        of bits, retriving bits from a word, changing bits in a word.
+    compress40.c
+        Contains main compress and decompress functions. Calls all
+        compression/decompression step functions in order to perform the
+        compression or decompression.
+    rgb-ypp.c
+        Header file: rgb-ypp.h
+        Converts rgb values to component video representation and back.
+    ypp-compressed.c
+        Header file: ypp-compressed.h
+        Converts ypps to ypp_structs and back.
+    compressed-word.c
+        Header file: compressed-word.h
+        Pack compressed pixels/blocks into 32-bit words, and unpack them from
+        the 32-bit words as well.
+    word-file.c
+        Header file: word-file.h
+        Prints out binary images to stdout and reads headers to make an 
+        A2 of words.
+    file-ppm.c
+        Header file: file-ppm.h
+        Reads in, makes, and prints out ppm files.
+    ppmdiff.c
+        CompareS two images to get a quantitative estimate of how similar
+        they are.
+    
+    
+
+Acknowledgements:
+    Thank you to the wonderful TAs! We're so grateful Igor, Tina, Alex, Liana,
+    Zach, Ann Marie, Miles, Mary-Joy, Kunal, Alan, Jackson, Devon, Adam, Dylan.
+    This homework would have been kind of terrible if not for their help.
+    Additionally, we asked a few of the other groups to explain some concepts
+    (like newu vs news -- we struggled with that) and appraciated their advice.
+
+Correctly Implemented:
+    * ppmdiff
+    * Reading in a ppm file to a Pnm_ppm and printing a ppm to stdout
+    * Changing RGB pixels to floating point values and transforming to Y/Pb/Pr
+        floats, converting from Y/Pb/Pr floats to RGB
+    * Calculating compressed values and calculating Y/Pb/Pr for the 4 pixels
+        put compressed into the block
+    * Quantizing Y/Pb/Pr values into a, b, c, d, index(Pb), and index(Pr)
+        values
+    * Bitpacking the aboves values into a 32 bit codeword
+    * Packing compressed values in a word and unpacking words into those
+        compressed values
+
+Incorrectly Implemented:
+    * None (to the best of our knowledge...)
+
+Hours spent analyzing the problems posed in the assignment:
+    Design - 8hrs
+    Bitpack design - 7hrs
+    Total: 15hrs
+
+Hours spent solving the problems after your analysis:
+    About 35 hours.

@@ -1,0 +1,144 @@
+                 COMP 40 Lab: Striding Through Memory
+        (for groups of two -- work with your locality partner)
+
+
+
++--------------------------------------------------------+
+|Keeper of the record: Lexi Shewchuk                     |
+|--------------------------------------------------------|
+|Lab partner: Deanna Oei                                 |
++--------------------------------------------------------+
+
+
+Please edit this document to include your answers to the questions
+below, and use the submit40-lab-strides script to submit your
+answers. 
+
+Read these questions before you start doing the lab experiments, and
+use these questions to guide your choice of test cases. Remember, the
+particular tests listed in the instructions are just hints for getting
+you started: you should run any experiments that you think will help
+you answer these questions or understand how the cache works.
+
+Don't worry if you aren't sure of an answer to a given quesetion.
+The goal here is to start teaching you to do what cache
+designers do: think step-by-step through what happens in a cache as
+a program runs, use actual simulations to determine which designs
+perform best on which applications, and extract general
+principles of cache design from the results of these simulations.
+
+FOR THESE FIRST FEW QUESTIONS, ASSUME A DIRECT MAPPED CACHE (the
+-assoc 1 setting for testcachesim, which is the default).
+
+Cache Size
+----------
+
+Q1a: If you know the block size in bytes for a cache and the number of
+     lines in the cache, what will be the total size of the cache in
+     bytes? 
+     * The total size will be (block size) * (number of lines).
+
+
+Q1b: For testcachesim, describe in detail how performance changes as
+     the size of the cache gets larger, presuming the size of the
+     test array remains the same?  
+     
+     * With the test cases we looked at, we noticed that....
+     * As the number of lines increases, the time for hits and time for
+          memory also increases.
+     * We noticed that when block size doubles, time for hits increases
+          slightly while time for memory reads does down by 50%.
+     * When number of line doubles, there is not much difference in 
+          performance time.
+     * Block size seems to have a larger impact on performance time than
+          number of lines.
+
+Q1c. Is there a point beyond which performance stops improving as
+     cache size increases? Why?
+
+     * Once the block size equals to total size of the array, the performance
+          will stop improving. At this point, every byte of the array is
+          stored in one block, which is put into one line of cache; no more
+          efficiency can be squeezed out of this case.
+
+
+Q1d. Sometimes performance is excellent (that is, the cache gives us a
+     very good speed up) but then making the test array just a little
+     bigger reduces performance dramatically. Why?
+     
+     * If the cache performs very well and has excellent speed, it's possible
+     that the entire array (spread across many blocks) can be stored in the 
+     cache at one time. If the size of the array increases, the array is spread
+     across more blocks, which have to be swapped out in the cache. These 
+     evictions are time-consuming and cause performance to decrease.
+
+Block sizes
+-----------
+
+In this section, assume that the total size of the cache we can build
+is fixed, but that we get to make choices as to whether we have
+fewer lines with bigger blocks, or more lines with smaller blocks.
+
+Q2.  Are bigger blocks always better? Worse? Assuming the total size
+     of the cache remains the same, and for an application like
+     testcachesim, which block size is best?
+
+     * The trade-off stems from whether you want temporal locality or
+          spacial locality. For example, if you're dealing with an array,
+          you probably want spacial locality, so bigger block size should be
+          prioritized. If you have a bunch of smaller, unrelated variables,
+          temporal locality is more valuable so line count should be
+          prioritized.
+
+
+Writing data
+------------
+
+Q3.  Reread the part of the instructions that explains the
+     "Reads_for_writes" count in your cache statistics. Is there a
+     value of the block size that will make "Reads_for_writes" zero?
+     If you understand this, then you understand a lot about how
+     "write-back" caches work.
+
+     * One line of the cache has to take an entire block or memory. For
+          writing small changes, it's more efficient to have smaller
+          blocks because less memory has to be read in order for the
+          cache to take in.
+     * We originally thought that If you want zero reads_for_writes, 
+          you can set the block size total
+          be equal to the element size; that way, every time you write an
+          element, only the one block that only holds that element
+          has to be altered. When block size = element size, our test resulted
+          in 0 read_for_write.
+          However, this should not be possible because we are writing before
+          reading?
+
+
+Q4.  Explain why, for applications that update memory repeatedly, a cache that
+     performs better may finish with more dirty blocks than a cache
+     that does not perform well on the same application.
+
+     * It's much more efficient to keep as much memory and memory writes in
+          the cache as possible. If lots of blocks are marked dirty, that
+          means that very few blocks had to be written back to main memory
+          over the course of the program, which is very efficient.
+
+
+=================================================================
+                     Associative caches
+=================================================================
+
+Q5.  Can you describe a situation in which a fully associative cache
+     will outperform a direct-mapped cache?
+
+     * Fully associative will outperform direct map when temporal locality
+          is prioritized. If there are a bunch of small, unrelated variables
+          that need to be accessed, they can replace the block that
+          was used least recently. However, if we wanted to access closely
+          related elements (like in an array traversal), this would be
+          less efficent, and it would be more efficient to use a direct
+          map cache. 
+
+Submit this file using script
+
+       submit40-lab-strides

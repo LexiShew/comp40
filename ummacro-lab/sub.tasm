@@ -1,0 +1,6 @@
+macro sub
+
+neg rt,p3
+add p1,p2,rt
+
+mend

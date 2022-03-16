@@ -1,0 +1,60 @@
+**************************************************************
+*            Stride Performance Test Results                 *
+**************************************************************
+
+Testing on 8 array elements each of size 4 bytes with stride 2.
+Total array size is 32 bytes.
+
+Elements in the array are accessed with write/read pairs.
+This is done first on element[0], then element [2] and so on.
+The entire process is repeated 4 times.
+
+No sum of array elements was maintained. All simulated cache 
+traffic was from array accesses.
+
+Total element accesses: 32  (16 read and 16 write)
+Total bytes accessed: 128
+
+
+==============================================================
+          Aggregate Cache and Performance Statistics
+==============================================================
+
+Simulated Cache Characteristics:
+--------------------------------
+
+Lines=4  Associativity=2   Block_size=4
+Total cache size is: 16 bytes
+
+The simulated cache is a "write-back" type: dirty blocks are not written
+to memory until evicted, at which time a "write_for_eviction"
+is recorded. When a line is written partially, then a
+"read_for_write" accounts the need to read the line from
+memory before updating it.
+
+Performance Results:
+--------------------
+
+Accesses=32  Hits=16 (50.0%)
+Read Misses=0 (0.0%) Write Misses=16 (100.0%)  Evictions=14
+Reads=16  Writes=16  Reads_for_writes=0  Writes_for_evictions=14
+Dirty blocks remaining=2
+
+Time for hits=16ns  Time for memory reads=0ns
+Time for memory writes (including flushing dirties)=2.08us
+Estimated total memory access time:   With caching=2.10us   No caching=3.68us
+Speedup: 1.8x
+
+
+==============================================================
+          Contents of individual cache line controls
+==============================================================
+
+Tag has 61 bits
+
+Line  Valid   Dirty Tag
+    0   VALID DIRTY 0000000000000000000000000000000000000000000000000000000000011
+    1   VALID DIRTY 0000000000000000000000000000000000000000000000000000000000010
+    2 INVALID CLEAN 0000000000000000000000000000000000000000000000000000000000000
+    3 INVALID CLEAN 0000000000000000000000000000000000000000000000000000000000000
+

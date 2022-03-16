@@ -1,0 +1,35 @@
+Total number of pixels: 20
+Transformation was performed in 3074762 nanoseconds
+Time per Pixel: 153738 nanoseconds
+------------------------------------------------
+Transformation was performed in 3099628 nanoseconds
+Total number of pixels: 20
+Time per Pixel: 154981 nanoseconds
+
+Transformation was performed in 3153970 nanoseconds
+Total number of pixels: 20
+Time per Pixel: 157698 nanoseconds
+
+Rotation 0 was performed in 3201180 nanoseconds
+Total number of pixels: 20
+Time per Pixel: 160059 nanoseconds
+
+Rotation 270 was performed in 3151861 nanoseconds
+Total number of pixels: 20
+Time per Pixel: 157593 nanoseconds
+
+Rotation 270 was performed in 3185318 nanoseconds
+Total number of pixels: 20
+Time per Pixel: 159266 nanoseconds
+
+Horizontal flip was performed in 3145965 nanoseconds
+Total number of pixels: 20
+Time per Pixel: 157298 nanoseconds
+
+Horizontal flip was performed in 3156214 nanoseconds
+Total number of pixels: 20
+Time per Pixel: 157811 nanoseconds
+
+Horizontal flip was performed in 3165690 nanoseconds
+Total number of pixels: 20
+Time per Pixel: 158284 nanoseconds

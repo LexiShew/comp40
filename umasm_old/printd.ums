@@ -1,0 +1,13 @@
+.section init
+    .zero r0
+    .temps r6, r7
+
+.section text
+    main:
+        # Write a recursive print function:
+        # – To print a 1-digit number, print the digit
+        # – To print an n-digit number, print the most significant n − 1 digits,
+        #       then print the least significant digit
+        output "hello world!\n"
+
+        goto r1

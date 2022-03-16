@@ -1,0 +1,4 @@
+
+Horizontal flip was performed in 9383 nanoseconds
+Total number of pixels: 20
+Time per Pixel: 469 nanoseconds

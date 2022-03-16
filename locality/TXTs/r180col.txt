@@ -1,0 +1,4 @@
+
+Rotation 180 was performed in 10267 nanoseconds
+Total number of pixels: 20
+Time per Pixel: 513 nanoseconds

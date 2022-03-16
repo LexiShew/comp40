@@ -1,0 +1,42 @@
+
+#			tests.tasm
+
+#--------------------------------------------------------------------
+#                            main
+#--------------------------------------------------------------------
+include writechar.tasm
+include mov.tasm
+include com.tasm
+include neg.tasm
+include sub.tasm
+
+# temp r6
+# loadval r3,65                  # This is the letter A in ASCII
+# writechar r3                   # invoke the macro: p1 is set to r3
+# mov r4,r3
+# writechar r4
+
+# temp r6
+# loadval r3,65
+# com r4,r3
+# com r4,r4
+# writechar r3
+# writechar r4
+
+# temp r6
+# loadval r3,65
+# writechar r3
+# neg r4,r3
+# neg r4,r4
+# writechar r4
+
+temp r6
+loadval r3,65
+writechar r3
+loadval r4,2
+add r5,r3,r4
+writechar r5
+sub r5,r5,r4
+writechar r5
+
+halt

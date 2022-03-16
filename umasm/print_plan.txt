@@ -1,0 +1,14 @@
+value = 365
+
+pos = 1
+cur = 1
+while cur != 0
+    cur = value / pos
+    pos *= 10
+pos /= 10
+
+while pos != 0
+    cur = value / pos
+    print_digit cur
+    value -= cur * pos
+    pos /= 10
